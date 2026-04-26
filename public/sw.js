@@ -1,15 +1,13 @@
 // Service Worker for SOS Robotics Website
-const CACHE_NAME = 'sos-robotics-v2'
-const urlsToCache = [
-  '/',
-  '/index.html'
-]
+const CACHE_NAME = 'sos-robotics-v3'
 
 // Install event - cache resources
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+    (async () => {
+      // Activate updated SW ASAP
+      await self.skipWaiting()
+    })()
   )
 })
 
@@ -17,6 +15,28 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   // Skip caching for non-GET requests
   if (event.request.method !== 'GET') {
+    return
+  }
+
+  // Network-first for HTML navigations so deploys don't break hashed assets.
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      (async () => {
+        try {
+          const response = await fetch(event.request)
+          const cache = await caches.open(CACHE_NAME)
+          cache.put('/index.html', response.clone())
+          return response
+        } catch {
+          const cached = await caches.match('/index.html')
+          if (cached) return cached
+          // Last resort: try the root document from cache.
+          const cachedRoot = await caches.match('/')
+          if (cachedRoot) return cachedRoot
+          throw new Error('No cached shell available')
+        }
+      })(),
+    )
     return
   }
 
@@ -30,10 +50,6 @@ self.addEventListener('fetch', (event) => {
         return fetch(event.request).catch((error) => {
           // If fetch fails, return a basic response instead of failing
           console.error('Fetch failed:', event.request.url, error)
-          // For navigation requests, return the cached index.html
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html')
-          }
           // For other requests, let the error propagate
           throw error
         })
@@ -44,15 +60,18 @@ self.addEventListener('fetch', (event) => {
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    (async () => {
+      const cacheNames = await caches.keys()
+      await Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName)
-          }
-        })
+          if (cacheName !== CACHE_NAME) return caches.delete(cacheName)
+          return undefined
+        }),
       )
-    })
+
+      // Take control of open pages immediately.
+      await self.clients.claim()
+    })(),
   )
 })
 
