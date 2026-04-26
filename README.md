@@ -55,13 +55,6 @@ See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for detailed deployment instruc
 - ✅ Timeline and testimonials
 - ✅ Touch gesture support
 
-## 📖 Dokumentáció
-
-- **[TELJES_TUTORIAL.md](./TELJES_TUTORIAL.md)** - Teljes tutorial magyarul (képek, videók, logó, minden!)
-- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Részletes telepítési útmutató
-- **[IMAGE_GUIDE.md](./IMAGE_GUIDE.md)** - Képek hozzáadásának részletes útmutatója
-- **[FAVICON_GUIDE.md](./FAVICON_GUIDE.md)** - Favicon és app ikonok beállítása
-
 ## 📁 Project Structure
 
 ```
@@ -97,11 +90,6 @@ SITE_URL=https://yourdomain.com
 1. Sign up at [Formspree](https://formspree.io/)
 2. Get your form ID
 3. Replace `YOUR_FORMSPREE_ID` in `src/pages/Contact.tsx`
-
-### Newsletter
-
-1. Choose an email service (Mailchimp, ConvertKit, etc.)
-2. Update the integration in `src/components/NewsletterSignup.tsx`
 
 ## 🎨 Customization
 
