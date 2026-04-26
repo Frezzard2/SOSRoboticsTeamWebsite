@@ -1,0 +1,102 @@
+.social-share {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.share-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.share-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.share-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.share-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--text-secondary);
+  transition: fill 0.3s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.share-facebook:hover {
+  background: #1877f2;
+  border-color: #1877f2;
+}
+
+.share-facebook:hover svg {
+  fill: white;
+}
+
+.share-twitter:hover {
+  background: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.share-twitter:hover svg {
+  fill: white;
+}
+
+.share-linkedin:hover {
+  background: #0077b5;
+  border-color: #0077b5;
+}
+
+.share-linkedin:hover svg {
+  fill: white;
+}
+
+.share-email:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.share-email:hover svg {
+  fill: white;
+}
+
+.share-native:hover {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.share-native:hover svg {
+  fill: white;
+}
+
+@media (max-width: 768px) {
+  .social-share {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .share-buttons {
+    flex-wrap: wrap;
+  }
+}
+

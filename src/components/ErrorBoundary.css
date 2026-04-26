@@ -1,0 +1,71 @@
+.error-boundary {
+  min-height: calc(100vh - 52px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(14, 52, 85, 0.02) 100%);
+}
+
+.error-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 3rem;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(14, 52, 85, 0.1);
+}
+
+.error-content h1 {
+  font-size: 2.5rem;
+  color: #1d1d1f;
+  margin-bottom: 1rem;
+}
+
+.error-content p {
+  font-size: 1.125rem;
+  color: #86868b;
+  margin-bottom: 2rem;
+}
+
+.error-details {
+  text-align: left;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: #f5f5f7;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.error-details summary {
+  cursor: pointer;
+  color: #0e3455;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.error-details pre {
+  margin-top: 0.5rem;
+  color: #86868b;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.error-reload-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #0e3455 0%, #494f54 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.error-reload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 52, 85, 0.3);
+}
+

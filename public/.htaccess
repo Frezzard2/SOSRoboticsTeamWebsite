@@ -1,0 +1,128 @@
+# Apache configuration for React SPA (Single Page Application)
+# This ensures all routes work correctly with client-side routing
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Skip rewriting for existing files
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule . - [L]
+  
+  # Skip rewriting for existing directories
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule . - [L]
+  
+  # Skip rewriting for static file extensions
+  RewriteCond %{REQUEST_URI} \.(css|js|json|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot|map|xml|txt|pdf)$ [NC]
+  RewriteRule . - [L]
+  
+  # Skip rewriting for assets and other static directories
+  RewriteCond %{REQUEST_URI} ^/(assets|gallery|sponsors)/ [NC]
+  RewriteRule . - [L]
+  
+  # Skip rewriting for specific files
+  RewriteCond %{REQUEST_URI} ^/(favicon\.ico|robots\.txt|sitemap\.xml|manifest\.json)$ [NC]
+  RewriteRule . - [L]
+  
+  # Rewrite everything else to index.html (for SPA routing)
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Enable GZIP compression for better performance
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Browser caching for static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Images
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # CSS and JavaScript
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  
+  # Fonts
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  
+  # HTML (no cache for HTML to ensure updates are seen)
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType application/json .json
+  AddType image/svg+xml .svg
+  AddType image/webp .webp
+  AddType font/woff .woff
+  AddType font/woff2 .woff2
+  AddType application/font-woff .woff
+  AddType application/font-woff2 .woff2
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  # Content Security Policy
+  # Note: Adjust CSP based on your actual needs
+  # 'unsafe-inline' and 'unsafe-eval' are needed for Vite in development
+  # In production, consider using nonces or hashes for inline scripts
+  # upgrade-insecure-requests forces HTTPS for all resources
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://formspree.io https://api.formspree.io; frame-src 'self' https://www.google.com https://www.youtube.com https://youtube.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formspree.io https://api.formspree.io; upgrade-insecure-requests;"
+  
+  # Prevent MIME type sniffing (but allow proper MIME types)
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Prevent clickjacking
+  Header set X-Frame-Options "SAMEORIGIN"
+  
+  # XSS protection
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Permissions Policy (formerly Feature Policy)
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  
+  # Cache control for static assets
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|css|js|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+    # Ensure proper content type is set
+    <FilesMatch "\.css$">
+      Header set Content-Type "text/css"
+    </FilesMatch>
+    <FilesMatch "\.js$">
+      Header set Content-Type "application/javascript"
+    </FilesMatch>
+  </FilesMatch>
+</IfModule>
+
+# Prevent access to sensitive files
+<FilesMatch "^(\.env|\.git|package\.json|package-lock\.json|tsconfig\.json|vite\.config\.ts)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+

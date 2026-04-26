@@ -1,0 +1,29 @@
+.page-transition {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-transition-entering {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-entered {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    transition: none;
+  }
+  
+  .page-transition-entering {
+    opacity: 1;
+    transform: none;
+  }
+}
+

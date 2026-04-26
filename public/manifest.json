@@ -1,0 +1,28 @@
+{
+  "name": "SOS Robotics Team",
+  "short_name": "SOS Robotics",
+  "description": "SOS Robotics Team - Building the future of rescue robotics through innovation and precision engineering",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0e3455",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "technology"],
+  "lang": "en",
+  "dir": "ltr"
+}
+

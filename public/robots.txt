@@ -1,0 +1,12 @@
+# robots.txt for SOS Robotics Team Website
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.sosrobotics.hu/sitemap.xml
+
+# Disallow admin or private areas if you have any
+# Disallow: /admin/
+# Disallow: /private/
+
