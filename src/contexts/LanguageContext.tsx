@@ -13,15 +13,15 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
-    // Get saved language from localStorage
-    const saved = localStorage.getItem('language') as Language
-    if (saved && ['en', 'hu', 'de'].includes(saved)) {
-      return saved
-    }
-    
-    // Auto-detect browser language
-    if (typeof navigator !== 'undefined') {
-      const browserLang = navigator.language.toLowerCase()
+    if (typeof window !== 'undefined') {
+      // Get saved language from localStorage
+      const saved = window.localStorage.getItem('language') as Language
+      if (saved && ['en', 'hu', 'de'].includes(saved)) {
+        return saved
+      }
+
+      // Auto-detect browser language
+      const browserLang = window.navigator.language.toLowerCase()
       if (browserLang.startsWith('hu')) return 'hu'
       if (browserLang.startsWith('de')) return 'de'
     }
